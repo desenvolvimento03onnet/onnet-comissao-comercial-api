@@ -1,2 +1,246 @@
-insert into clients (codclient, "name", city, contract, "date", operation, codplan, plan, plan_value, cod_old_plan, old_plan, old_plan_value, cod_new_plan, new_plan, new_plan_value, "operator", city_operator, recurring_payment, tv, telephony, invoice, paid, due_date)
-values (21891, 'JUSCELINA MARQUES PINTO', 'Abadia dos Dourados', 34656, '2025-01-03', 'Renovação', 3455, 'COMBATE 1P - 50 MB FIBER - 79,90 - PLUS', 79.9, 1865, 'COMBATE 1P - 50 MB FIBER - PLUS - RENOVAÇÃO', 79.9, 3455, 'COMBATE 1P - 50 MB FIBER - 79,90 - PLUS', 79.9, 'ketnenpaula138', 'Abadia dos Dourados', false, false, false, 12975668, true, '10')
+insert into cities ("name", uf) values ('Abadia dos Dourados', 'MG');
+insert into cities ("name", uf) values ('Araguari', 'MG');
+insert into cities ("name", uf) values ('Buritizeiro', 'MG');
+insert into cities ("name", uf) values ('Cruzeiro da Fortaleza', 'MG');
+insert into cities ("name", uf) values ('Guimarânia', 'MG');
+insert into cities ("name", uf) values ('Iraí de Minas', 'MG');
+insert into cities ("name", uf) values ('João Pinheiro', 'MG');
+insert into cities ("name", uf) values ('Lagoa Formosa', 'MG');
+insert into cities ("name", uf) values ('Patos de Minas', 'MG');
+insert into cities ("name", uf) values ('Patrocínio', 'MG');
+insert into cities ("name", uf) values ('Pirapora', 'MG');
+insert into cities ("name", uf) values ('Presidente Olegário', 'MG');
+insert into cities ("name", uf) values ('São Gonçalo do Abaeté', 'MG');
+insert into cities ("name", uf) values ('Três Marias', 'MG');
+insert into cities ("name", uf) values ('Varjão de Minas', 'MG');
+insert into cities ("name", uf) values ('Várzea da Palma', 'MG');
+
+
+insert into comissions ("active", comission, "value") values (true, 'Renovação', '*2');
+
+insert into permission_level ("level", description, active) values (1, 'Administração', true);
+insert into permission_level ("level", description, active) values (2, 'Gerente', true);
+insert into permission_level ("level", description, active) values (3, 'Operador', true);
+
+insert into sectors (active, "name") values (true, 'DESENVOLVIMENTO');
+
+insert into users ("user", "name", "password", created_at, id_city, id_sector) values ('teste', 'Teste', 'dGVzdGUy', current_timestamp, 10, 1)
+
+
+
+CREATE TABLE comissoes_comercial.users (
+                id INT AUTO_INCREMENT NOT NULL,
+                user VARCHAR(20) NOT NULL,
+                name VARCHAR(100) NOT NULL,
+                password VARCHAR(50) NOT NULL,
+                created_at DATETIME NOT NULL,
+                id_city INT NOT NULL,
+                id_sector INT NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE comissoes_comercial.cities (
+                id INT AUTO_INCREMENT NOT NULL,
+                name VARCHAR(50) NOT NULL,
+                uf VARCHAR(2) NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE comissoes_comercial.clients (
+                id INT AUTO_INCREMENT NOT NULL,
+                codclient INT NOT NULL,
+                name VARCHAR(150) NOT NULL,
+                city VARCHAR(50) NOT NULL,
+                contract INT NOT NULL,
+                date DATE NOT NULL,
+                operation VARCHAR(20),
+                codplan INT NOT NULL,
+                plan VARCHAR(60) NOT NULL,
+                plan_value DOUBLE PRECISION NOT NULL,
+                cod_old_plan INT,
+                old_plan VARCHAR(60),
+                old_plan_value DOUBLE PRECISION,
+                cod_new_plan INT,
+                new_plan VARCHAR(60),
+                new_plan_value DOUBLE PRECISION,
+                operator VARCHAR(20) NOT NULL,
+                city_operator VARCHAR(50),
+                recurring_payment BOOLEAN NOT NULL,
+                tv BOOLEAN NOT NULL,
+                telephony BOOLEAN NOT NULL,
+                invoice INT NOT NULL,
+                paid BOOLEAN NOT NULL,
+                due_date VARCHAR(2) NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE comissoes_comercial.comissions (
+                id INT AUTO_INCREMENT NOT NULL,
+                active BOOLEAN NOT NULL,
+                comission VARCHAR(20) NOT NULL,
+                value VARCHAR(20) NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE comissoes_comercial.permission_level (
+                id INT AUTO_INCREMENT NOT NULL,
+                level INT NOT NULL,
+                description VARCHAR(50) NOT NULL,
+                active BOOLEAN NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE comissoes_comercial.sectors (
+                id INT AUTO_INCREMENT NOT NULL,
+                active BOOLEAN NOT NULL,
+                name VARCHAR(50) NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+
+
+CREATE TABLE comissoes_comercial.users_logs (
+                id INT AUTO_INCREMENT NOT NULL,
+                date DATETIME NOT NULL,
+                id_user INT NOT NULL,
+                description VARCHAR(150) NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE comissoes_comercial.users_permissions (
+                id INT AUTO_INCREMENT NOT NULL,
+                id_user INT NOT NULL,
+                id_permission_level INT NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE comissoes_comercial.comissions_logs (
+                id INT AUTO_INCREMENT NOT NULL,
+                date DATETIME NOT NULL,
+                id_comission INT NOT NULL,
+                id_user INT NOT NULL,
+                description VARCHAR(150) NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE comissoes_comercial.comissions_sectors (
+                id INT NOT NULL,
+                id_comission INT NOT NULL,
+                id_sector INT AUTO_INCREMENT NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE comissoes_comercial.permission_cities (
+                id INT AUTO_INCREMENT NOT NULL,
+                id_permission_level INT NOT NULL,
+                id_city INT NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE comissoes_comercial.users_clients_comissions (
+                id INT AUTO_INCREMENT NOT NULL,
+                id_user INT NOT NULL,
+                id_client INT NOT NULL,
+                id_comission INT NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX cities_pk
+ ON comissoes_comercial.cities
+ ( id );
+
+ALTER TABLE comissoes_comercial.users ADD CONSTRAINT cities_users_fk
+FOREIGN KEY (id_city)
+REFERENCES comissoes_comercial.cities (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.permission_cities ADD CONSTRAINT cities_permission_cities_fk
+FOREIGN KEY (id_city)
+REFERENCES comissoes_comercial.cities (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.users_clients_comissions ADD CONSTRAINT clients_users_clients_fk
+FOREIGN KEY (id_client)
+REFERENCES comissoes_comercial.clients (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.comissions_logs ADD CONSTRAINT comissions_comissions_logs_fk
+FOREIGN KEY (id_comission)
+REFERENCES comissoes_comercial.comissions (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.comissions_sectors ADD CONSTRAINT comissions_comissions_sectors_fk
+FOREIGN KEY (id_comission)
+REFERENCES comissoes_comercial.comissions (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.users_clients_comissions ADD CONSTRAINT comissions_users_clients_comissions_fk
+FOREIGN KEY (id_comission)
+REFERENCES comissoes_comercial.comissions (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.permission_cities ADD CONSTRAINT permission_level_permission_cities_fk
+FOREIGN KEY (id_permission_level)
+REFERENCES comissoes_comercial.permission_level (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.users_permissions ADD CONSTRAINT permission_level_users_permissions_fk
+FOREIGN KEY (id_permission_level)
+REFERENCES comissoes_comercial.permission_level (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.comissions_sectors ADD CONSTRAINT sectors_comissions_sectors_fk
+FOREIGN KEY (id_sector)
+REFERENCES comissoes_comercial.sectors (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.users ADD CONSTRAINT sectors_users_fk
+FOREIGN KEY (id_sector)
+REFERENCES comissoes_comercial.sectors (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.comissions_logs ADD CONSTRAINT users_comissions_logs_fk
+FOREIGN KEY (id_user)
+REFERENCES comissoes_comercial.users (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.users_clients_comissions ADD CONSTRAINT users_users_clients_fk
+FOREIGN KEY (id_user)
+REFERENCES comissoes_comercial.users (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.users_logs ADD CONSTRAINT users_user_logs_fk
+FOREIGN KEY (id_user)
+REFERENCES comissoes_comercial.users (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comissoes_comercial.users_permissions ADD CONSTRAINT users_users_permissions_fk
+FOREIGN KEY (id_user)
+REFERENCES comissoes_comercial.users (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;

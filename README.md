@@ -137,6 +137,19 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 - 📥 `/api/SelectClient` --> Rota que recebe um `código do cliente` e um `contrato` e retorna as informações dele;
 - 📥 `/api/SelectAllClient` --> Rota que busca no banco comissoes_comercial, todas os clientes do sistema;
 
+#### Retorno dos dados para a criação dos gráficos
+
+- 📥 `/api/AllUserChart` --> Rota que recebe um `usuário` e retorna as todas as operações dele;
+- 📥 `/api/SellUserChart` --> Rota que recebe um `usuário` e retorna as todas as vendas dele;
+- 📥 `/api/RenewalUserChart` --> Rota que recebe um `usuário` e retorna as todas as renovações(`Renovações`, `Upgrade`e `Downgrade`) dele;
+- 📥 `/api/CityUserChart` --> Rota que recebe um `usuário` e retorna as todas as operações, por cidade, dele;
+- 📥 `/api/CitySellUserChart` --> Rota que recebe um `usuário` e retorna as todas as vendas, por cidade, dele;
+- 📥 `/api/CityRenewalUserChart` --> Rota que recebe um `usuário` e retorna as todas as renovações(`Renovações`, `Upgrade`e `Downgrade`), por cidade, dele;
+- 📥 `/api/UserTable` --> Rota que recebe um `usuário` e retorna as todas as operações dele;
+- 📥 `/api/SectorAllChart` --> Rota que recebe um `usuário` e retorna as todas as operações, por setor, caso o usuário esteja com nível de permissão diferente de `2 - Operador`;
+- 📥 `/api/SectorSellChart` --> Rota que recebe um `usuário` e retorna as todas as vendas, por setor, caso o usuário esteja com nível de permissão diferente de `2 - Operador`;
+- 📥 `/api/SectorRenewalChart` --> Rota que recebe um `usuário` e retorna as todas as renovações(`Renovações`, `Upgrade`e `Downgrade`), por setor, caso o usuário esteja com nível de permissão diferente de `2 - Operador`;
+
 ## 🤝 Colaboradores
 
 Agradecemos às seguintes pessoas que contribuíram para este projeto:

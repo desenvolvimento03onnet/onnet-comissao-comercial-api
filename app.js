@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const operationController = require('./MK/controllers/operationController');
 const invoiceController = require('./ComissaoComercial/controllers/invoiceController');
 const insertBDComissao = require('./ComissaoComercial/controllers/insertBDController');
@@ -14,11 +15,13 @@ const crudPermissionLevel = require('./ComissaoComercial/controllers/crudPermiss
 const crudUserClientComission = require('./ComissaoComercial/controllers/crudUserClientComissionController');
 const crudUserLogs = require('./ComissaoComercial/controllers/crudUserLogsController');
 const crudUserPermission = require('./ComissaoComercial/controllers/crudUserPermissionController');
+const createChart = require('./ComissaoComercial/controllers/createChartController');
  
 const app = express();
 const PORT = 3000;
  
 app.use(express.json());
+app.use(cors());
 
 // -- MK --
 
@@ -33,6 +36,7 @@ app.get('/api/Operations', operationController.getAllOperations);
 app.post('/api/UpdateInvoice', invoiceController.updateInvoice);
 
 // - Insere Comissões no Banco
+app.get('/api/ValidaBDComissao', insertBDComissao.validaDB);
 app.post('/api/InsertBDComissao', insertBDComissao.insertDB);
 
 // - Crud tabela de Usuários
@@ -118,6 +122,18 @@ app.post('/api/UpdateClient', crudClient.updateClient);
 app.post('/api/DeleteClient', crudClient.deleteClient);
 app.get('/api/SelectClient', crudClient.selectClient);
 app.get('/api/SelectAllClient', crudClient.selectAllClient);
+
+// - Retorno dos dados para a criação dos gráficos
+app.get('/api/AllUserChart', createChart.CreateAllUserChart);
+app.get('/api/SellUserChart', createChart.CreateSellUserChart);
+app.get('/api/RenewalUserChart', createChart.CreateRenewalUserChart);
+app.get('/api/CityUserChart', createChart.CreateCityUserChart);
+app.get('/api/CitySellUserChart', createChart.CreateCitySellUserChart);
+app.get('/api/CityRenewalUserChart', createChart.CreateCityRenewalUserChart);
+app.get('/api/UserTable', createChart.CreateUserTable);
+app.get('/api/SectorAllChart', createChart.CreateSectorAllChart);
+app.get('/api/SectorSellChart', createChart.CreateSectorSellChart);
+app.get('/api/SectorRenewalChart', createChart.CreateSectorRenewalChart);
 
 app.listen(PORT, () => {
   console.log(`Servidor na porta ${PORT}`);

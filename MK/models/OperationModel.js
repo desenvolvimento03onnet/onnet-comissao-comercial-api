@@ -314,14 +314,14 @@ const Operacao = { // pode colocar o nome que quiser, recomendo colocar o nome r
           "WHERE\n"+
             "(\n"+
               "(\n"+
-                "contrato.adesao = CURRENT_DATE - 1 and --BETWEEN (SELECT (DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '3 month')::date) AND CURRENT_DATE AND\n"+
+                "contrato.adesao = CURRENT_DATE - 20 and --BETWEEN (SELECT (DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '3 month')::date) AND CURRENT_DATE AND\n"+
                 "contrato.cancelado = 'N'\n"+
               ")\n"+
               "OR\n"+
               "(\n"+
-                "contrato.adesao = CURRENT_DATE - 1 and --BETWEEN (SELECT (DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '3 month')::date) AND CURRENT_DATE and\n"+
+                "contrato.adesao = CURRENT_DATE - 20 and --BETWEEN (SELECT (DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '3 month')::date) AND CURRENT_DATE and\n"+
                 "contrato.cancelado = 'S' and\n"+
-                "contrato.dt_cancelamento = CURRENT_DATE - 1 and --BETWEEN (SELECT (DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '3 month')::date) AND CURRENT_DATE AND\n"+
+                "contrato.dt_cancelamento = CURRENT_DATE - 20 and --BETWEEN (SELECT (DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '3 month')::date) AND CURRENT_DATE AND\n"+
                 "contrato.motivo_cancelamento_2 not IN (6,13,15)-- AJUSTE SISTEMA, ERRO DE CONTRATO EM DUPLICIDADE, CONTRATO NÃO ASSINADO\n"+
               ")\n"+
             ")\n"+
@@ -796,7 +796,7 @@ const Operacao = { // pode colocar o nome que quiser, recomendo colocar o nome r
         "LEFT JOIN mk_pessoas operadorcad ON (operadorcad.codpessoa = operador.codpessoa)\n"+
         "LEFT JOIN mk_cidades cidadeope ON (cidadeope.codcidade = operadorcad.codcidade)\n"+
         "WHERE\n"+
-          "ultimo.dt_hr::DATE = CURRENT_DATE - 1\n"+
+          "ultimo.dt_hr::DATE = CURRENT_DATE - 20\n"+
           "AND contrato.cancelado = 'N'\n"+
           "AND operador.perfil_ativo = 'S'\n"+
         ") AS tabela\n"+

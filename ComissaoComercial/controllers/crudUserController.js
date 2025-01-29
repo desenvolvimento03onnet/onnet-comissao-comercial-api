@@ -13,9 +13,9 @@ const crudUserController = {
     }
   },
   selectUser: async (req, res) => {
-    const { user } = req.body;
+    const { user, password } = req.query;
     try {
-      const selectUser = await crudUser.selectUser(user);
+      const selectUser = await crudUser.selectUser(user, password);
       // var resultado = await Promise.all(
       //   selectUser.map(async(origem) => {
       //     return origem.password;

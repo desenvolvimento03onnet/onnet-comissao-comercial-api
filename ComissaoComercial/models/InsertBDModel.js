@@ -47,7 +47,7 @@ const Insert = {
   },
   insertDB: async () => {
     var resultado = await Promise.all(
-      resultados[0].map(async(origem) => {
+      resultados[0].map(async (origem) => {
         try {
           const query = 
           "insert into\n"+
