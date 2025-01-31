@@ -21,6 +21,7 @@ const CreateSellChart = {
     try {
       const query = 
       "select distinct\n"+
+      "cli.operation,\n"+
       "cli.contract\n"+
       "from clients cli\n"+
       "where\n"+
@@ -37,6 +38,7 @@ const CreateSellChart = {
     try {
       const query = 
       "select distinct\n"+
+      "cli.operation,\n"+
       "cli.contract\n"+
       "from clients cli\n"+
       "where\n"+
