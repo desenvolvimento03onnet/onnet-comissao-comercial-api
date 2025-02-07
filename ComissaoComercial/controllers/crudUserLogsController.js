@@ -2,9 +2,9 @@ const crudUserLogs = require('../models/CRUDUserLogsModel'); // Importe o modelo
 
 const crudUserLogsController = {
   insertNewUserLogs: async (req, res) => {
-    const { date, id_user, description } = req.body;
+    const { date, type, id_user, description } = req.query;
     try {
-      const insertUserLogs = await crudUserLogs.insertNewUserLogs(date, id_user, description);
+      const insertUserLogs = await crudUserLogs.insertNewUserLogs(date, type, id_user, description);
       res.status(200).json(insertUserLogs);
     } catch (error) {
       res.status(500).json({ error: 'Erro ao Inserir Usuários Logs. '+error });

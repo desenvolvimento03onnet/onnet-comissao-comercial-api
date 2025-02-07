@@ -2,9 +2,9 @@ const crudComisson = require('../models/CRUDComissionModel'); // Importe o model
 
 const crudComissionController = {
   insertNewComission: async (req, res) => {
-    const { active, comission, value } = req.body;
+    const { active, comission, value, id_sector } = req.query;
     try {
-      const insertComission = await crudComisson.insertNewComission(active, comission, value);
+      const insertComission = await crudComisson.insertNewComission(active, comission, value, id_sector);
       res.status(200).json(insertComission);
     } catch (error) {
       res.status(500).json({ error: 'Erro ao Inserir Comissão. '+error });

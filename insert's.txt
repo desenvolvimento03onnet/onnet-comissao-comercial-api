@@ -26,6 +26,18 @@ insert into sectors (active, "name") values (true, 'DESENVOLVIMENTO');
 
 insert into users ("user", "name", "password", created_at, id_city, id_sector) values ('teste', 'Teste', 'dGVzdGUy', current_timestamp, 10, 1)
 
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Renovação', '2', 2);
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Upgrade', '((novo_plano_valor - velho_plano_valor) * 0.10)+2', 2);
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Downgrade', '0', 2);
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Renovação', '4', 3);
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Upgrade', '((novo_plano_valor - velho_plano_valor) * 0.25)+5', 3);
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Downgrade', '0', 3);
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Renovação', '6', 4);
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Upgrade', '7', 4);
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Downgrade', '0', 4);
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Venda', 'valor_plano * 0.10', 2);
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Venda', 'valor_plano * 0.10', 3);
+INSERT INTO comissions (active, comission, "value", id_sector) VALUES (TRUE, 'Venda', '20', 4);
 
 
 CREATE TABLE comissoes_comercial.users (
@@ -244,3 +256,29 @@ FOREIGN KEY (id_user)
 REFERENCES comissoes_comercial.users (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
+
+CREATE SEQUENCE comissoes_comercial.public.users_sectors_id_user_sector_seq;
+
+CREATE TABLE comissoes_comercial.public.users_sectors (
+                id_user_sector INTEGER NOT NULL DEFAULT nextval('comissoes_comercial.public.users_sectors_id_user_sector_seq'),
+                id_sector INTEGER NOT NULL,
+                id_user INTEGER NOT NULL,
+                CONSTRAINT users_sectors_pk PRIMARY KEY (id_user_sector)
+);
+
+
+ALTER SEQUENCE comissoes_comercial.public.users_sectors_id_user_sector_seq OWNED BY comissoes_comercial.public.users_sectors.id_user_sector;
+
+ALTER TABLE comissoes_comercial.public.users_sectors ADD CONSTRAINT sectors_users_sectors_fk
+FOREIGN KEY (id_sector)
+REFERENCES comissoes_comercial.public.sectors (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE comissoes_comercial.public.users_sectors ADD CONSTRAINT users_users_sectors_fk
+FOREIGN KEY (id_user)
+REFERENCES comissoes_comercial.public.users (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;

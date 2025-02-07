@@ -21,11 +21,11 @@ const CrudUser = {
     try {
       const query = 
       "select distinct\n"+
+      "u.\"id\",\n"+
       "u.\"name\",\n"+
       "u.\"password\",\n"+
       "u.created_at,\n"+
       "u.id_city,\n"+
-      "u.id_sector,\n"+
       "u.active\n"+
       "from users u\n"+
       "where\n"+

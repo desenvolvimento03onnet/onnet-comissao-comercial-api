@@ -1,15 +1,15 @@
 const dbComissao = require('../../config/dbComissaoComercial.js');
 
 const CrudUserClientComission = {
-  insertNewUserClientComission: async (id_user, id_client, id_comission) => {
+  insertNewUserClientComission: async (id_user, id_client, comission_value, created_at) => {
     try {
       const query = 
       "insert into\n"+
       "users_clients_comissions\n"+
-      "(id_user, id_client, id_comission)\n"+
+      "(id_user, id_client, comission_value, created_at)\n"+
       "VALUES\n"+
-      "($1, $2, $3)";
-      const values = [id_user, id_client, id_comission];
+      "($1, $2, $3, $4)";
+      const values = [id_user, id_client, comission_value, created_at];
       const result = await dbComissao.query(query, values);
       return result.rows;
     } catch (error) {

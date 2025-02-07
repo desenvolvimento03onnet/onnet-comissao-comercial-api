@@ -9,13 +9,13 @@ const crudCity = require('./ComissaoComercial/controllers/crudCityController');
 const crudClient = require('./ComissaoComercial/controllers/crudClientController');
 const crudComission = require('./ComissaoComercial/controllers/crudComissionController');
 const crudComissionLogs = require('./ComissaoComercial/controllers/crudComissionLogsController');
-const crudComissionSector = require('./ComissaoComercial/controllers/crudComissionSectorController');
 const crudPermissionCity = require('./ComissaoComercial/controllers/crudPermissionCityController');
 const crudPermissionLevel = require('./ComissaoComercial/controllers/crudPermissionLevelController');
 const crudUserClientComission = require('./ComissaoComercial/controllers/crudUserClientComissionController');
 const crudUserLogs = require('./ComissaoComercial/controllers/crudUserLogsController');
 const crudUserPermission = require('./ComissaoComercial/controllers/crudUserPermissionController');
 const createChart = require('./ComissaoComercial/controllers/createChartController');
+const insertAfterValidation = require('./ComissaoComercial/controllers/insertAfterValidationUserClientComissionController');
  
 const app = express();
 const PORT = 3000;
@@ -52,13 +52,6 @@ app.post('/api/UpdateSector', crudSector.updateSector);
 app.post('/api/DeleteSector', crudSector.deleteSector);
 app.get('/api/SelectSector', crudSector.selectSector);
 app.get('/api/SelectAllSector', crudSector.selectAllSector);
-
-// - Crud tabela de Comissão-Setor
-app.post('/api/InsertComissionSector', crudComissionSector.insertNewComissionSector);
-app.post('/api/UpdateComissionSector', crudComissionSector.updateComissionSector);
-app.post('/api/DeleteComissionSector', crudComissionSector.deleteComissionSector);
-app.get('/api/SelectComissionSector', crudComissionSector.selectComissionSector);
-app.get('/api/SelectAllComissionSector', crudComissionSector.selectAllComissionSector);
 
 // - Crud tabela de Comissão
 app.post('/api/InsertComission', crudComission.insertNewComission);
@@ -134,6 +127,10 @@ app.get('/api/UserTable', createChart.CreateUserTable);
 app.get('/api/SectorAllChart', createChart.CreateSectorAllChart);
 app.get('/api/SectorSellChart', createChart.CreateSectorSellChart);
 app.get('/api/SectorRenewalChart', createChart.CreateSectorRenewalChart);
+app.get('/api/UserComissionChart', createChart.CreateUserComissionChart);
+
+// - Recebe os dados do cliente, usuário e comissão, valida se já não existe e, se não existir, insere no banco
+app.post('/api/InsereAfterValidation', insertAfterValidation.insertDB);
 
 app.listen(PORT, () => {
   console.log(`Servidor na porta ${PORT}`);

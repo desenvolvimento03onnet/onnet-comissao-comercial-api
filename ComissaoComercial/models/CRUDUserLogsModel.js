@@ -1,15 +1,15 @@
 const dbComissao = require('../../config/dbComissaoComercial.js');
 
 const CrudUserLogs = {
-  insertNewUserLogs: async (date, id_user, description) => {
+  insertNewUserLogs: async (date, type, id_user, description) => {
     try {
       const query = 
       "insert into\n"+
       "users_logs\n"+
-      "(\"date\", id_user, description)\n"+
+      "(\"date\", \"type\", id_user, description)\n"+
       "VALUES\n"+
-      "($1, $2, $3)";
-      const values = [date, id_user, description];
+      "($1, $2, $3, $4)";
+      const values = [date, type, id_user, description];
       const result = await dbComissao.query(query, values);
       return result.rows;
     } catch (error) {

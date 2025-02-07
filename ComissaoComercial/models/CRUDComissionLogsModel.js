@@ -1,7 +1,7 @@
 const dbComissao = require('../../config/dbComissaoComercial.js');
 
 const CrudComissionLogs = {
-  insertNewUser: async (date, id_comission, id_user, description) => {
+  insertNewComissionLogs: async (date, id_comission, id_user, description) => {
     try {
       const query = 
       "insert into\n"+

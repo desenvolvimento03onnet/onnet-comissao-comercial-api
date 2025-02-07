@@ -90,6 +90,20 @@ const createChartController = {
     } catch (error) {
       res.status(500).json({ error: 'Erro ao buscar valores do Gráfico. '+error });
     }
+  },
+  CreateUserComissionChart: async (req, res) => {
+    const { user } = req.query;
+    try {
+      const userComissionChart = await createChart.CreateUserComissionChart(user);
+
+      const resultado = userComissionChart.map(item => ({
+          ...item,
+          value: parseFloat(eval(item.value).toFixed(2))
+      }));
+      res.status(200).json(resultado);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar valores do Gráfico. '+error });
+    }
   }
 };
 
