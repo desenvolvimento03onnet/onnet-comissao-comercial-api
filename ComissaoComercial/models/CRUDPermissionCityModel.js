@@ -4,11 +4,11 @@ const CrudPermissionCity = {
   insertNewPermissionCity: async (id_permission_level, id_city) => {
     try {
       const query = 
-      "insert into\n"+
-      "permission_cities\n"+
-      "(id_permission_level, id_city)\n"+
-      "VALUES\n"+
-      "($1, $2)";
+      `insert into
+      permission_cities
+      (id_permission_level, id_city)
+      VALUES
+      ($1, $2)`;
       const values = [id_permission_level, id_city];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -19,12 +19,12 @@ const CrudPermissionCity = {
   selectPermissionCity: async (campo) => {
     try {
       const query = 
-      "select distinct\n"+
-      "*\n"+
-      "from permission_cities pc\n"+
-      "where\n"+
-      "pc.id_permission_level = $1 or\n"+
-      "pc.id_city = $1";
+      `select distinct
+      *
+      from permission_cities pc
+      where
+      pc.id_permission_level = $1 or
+      pc.id_city = $1`;
       const values = [campo];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -35,9 +35,9 @@ const CrudPermissionCity = {
   selectAllPermissionCity: async () => {
     try {
       const query = 
-      "select\n"+
-      "*\n"+
-      "from permission_cities pc";
+      `select
+      *
+      from permission_cities pc`;
       const result = await dbComissao.query(query);
       return result.rows;
     } catch (error) {
@@ -48,12 +48,12 @@ const CrudPermissionCity = {
     let valorV = valor+",";
     try {
       const query = 
-      "update permission_cities\n"+
-      "set\n"+
-      "$1 = $2\n"+
-      "where\n"+
-      "id_permission_level = $3 and\n"+
-      "id_city = $4";
+      `update permission_cities
+      set
+      $1 = $2
+      where
+      id_permission_level = $3 and
+      id_city = $4`;
       const values = [campo, valorV, id_permission_level, id_city];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -65,10 +65,10 @@ const CrudPermissionCity = {
     let valorV = valor+" and";
     try {
       const query = 
-      "delete from\n"+
-      "permission_cities\n"+
-      "where\n"+
-      "$1 = $2";
+      `delete from
+      permission_cities
+      where
+      $1 = $2`;
       const values = [campo, valorV];
       const result = await dbComissao.query(query, values);
       return result.rows;

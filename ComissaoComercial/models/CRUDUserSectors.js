@@ -1,82 +1,75 @@
 const dbComissao = require('../../config/dbComissaoComercial.js');
 
-const CrudUserPermission = {
-  insertNewUserPermission: async (id_user, id_permission_level) => {
+
+const CrudUserSector = {
+  insertNewUserSector: async (id_user, id_sector) => {
     try {
       const query = 
       `insert into
-      users_permissions
-      (id_user, id_permission_level)
+      users_sectors
+      (id_user, id_sector)
       VALUES
       ($1, $2)`;
-      const values = [id_user, id_permission_level];
+      const values = [id_user, id_sector];
       const result = await dbComissao.query(query, values);
       return result.rows;
     } catch (error) {
      throw error;
     }
   },
-  selectUserPermission: async (user, password) => {
+  selectUserSector: async (user) => {
     try {
       const query = 
       `SELECT DISTINCT
-      usu.id,
       usu.user,
-      usu.password,
-      usu.name,
-      usu.active,
-      pe."level",
-      pe.description
+      se.name sector
       FROM
-      users_permissions usupe
-      INNER JOIN users usu ON (usu.id = usupe.id_user)
-      INNER JOIN permission_level pe ON (pe.id = usupe.id_permission_level)
+      users_sectors usuSe
+      INNER JOIN users usu ON (usu.id = usuSe.id_user)
+      INNER JOIN sectors se ON (se.id = usuSe.id_sector)
       WHERE
-      usu.user = $1 and
-      usu.password = $2 and
-      usu."active" is true`;
-      const values = [user, password];
+      usu.user = $1`;
+      const values = [user];
       const result = await dbComissao.query(query, values);
       return result.rows;
     } catch (error) {
      throw error;
     }
   },
-  selectAllUserPermission: async () => {
+  selectAllUserSector: async () => {
     try {
       const query = 
       `select
       *
-      from users_permissions up`;
+      from users_sectors u`;
       const result = await dbComissao.query(query);
       return result.rows;
     } catch (error) {
      throw error;
     }
   },
-  updateUserPermission: async (campo, valor, id_user, id_permission_level) => {
+  updateUserSector: async (campo, valor, user) => {
     let valorV = valor+",";
     try {
       const query = 
-      `update users_permissions
+      `update users_sectors
       set
       $1 = $2
       where
-      id_user = $3 or
-      id_permission_level = $4`;
-      const values = [campo, valorV, id_user, id_permission_level];
+      "user" ilike %$3%`;
+      const values = [campo, valorV, user];
       const result = await dbComissao.query(query, values);
       return result.rows;
     } catch (error) {
      throw error;
     }
   },
-  deleteUserPermission: async (campo, valor) => {
+  deleteUserSector: async (campo, valor) => {
     let valorV = valor+" and";
     try {
       const query = 
       `delete from
-      users_permissions
+      users_sectors
       where
       $1 = $2`;
       const values = [campo, valorV];
@@ -88,4 +81,4 @@ const CrudUserPermission = {
   }
 };
  
-module.exports = CrudUserPermission;
+module.exports = CrudUserSector;

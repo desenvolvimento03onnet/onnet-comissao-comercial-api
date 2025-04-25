@@ -13,6 +13,7 @@ const crudPermissionCity = require('./ComissaoComercial/controllers/crudPermissi
 const crudPermissionLevel = require('./ComissaoComercial/controllers/crudPermissionLevelController');
 const crudUserClientComission = require('./ComissaoComercial/controllers/crudUserClientComissionController');
 const crudUserLogs = require('./ComissaoComercial/controllers/crudUserLogsController');
+const crudUserSectors = require('./ComissaoComercial/controllers/crudUserSectorsController');
 const crudUserPermission = require('./ComissaoComercial/controllers/crudUserPermissionController');
 const createChart = require('./ComissaoComercial/controllers/createChartController');
 const insertAfterValidation = require('./ComissaoComercial/controllers/insertAfterValidationUserClientComissionController');
@@ -74,6 +75,13 @@ app.post('/api/DeleteUserLog', crudUserLogs.deleteUserLogs);
 app.get('/api/SelectUserLog', crudUserLogs.selectUserLogs);
 app.get('/api/SelectAllUserLog', crudUserLogs.selectAllUserLogs);
 
+// - Crud tabela de Usuários-Setores
+app.post('/api/InsertUserSectors', crudUserSectors.insertNewUserSector);
+app.post('/api/UpdateUserSectors', crudUserSectors.updateUserSector);
+app.post('/api/DeleteUserSectors', crudUserSectors.deleteUserSector);
+app.get('/api/SelectUserSectors', crudUserSectors.selectUserSector);
+app.get('/api/SelectAllUserSectors', crudUserSectors.selectAllUserSector);
+
 // - Crud tabela de Cidades
 app.post('/api/InsertCity', crudCity.insertNewCity);
 app.post('/api/UpdateCity', crudCity.updateCity);
@@ -128,6 +136,12 @@ app.get('/api/SectorAllChart', createChart.CreateSectorAllChart);
 app.get('/api/SectorSellChart', createChart.CreateSectorSellChart);
 app.get('/api/SectorRenewalChart', createChart.CreateSectorRenewalChart);
 app.get('/api/UserComissionChart', createChart.CreateUserComissionChart);
+app.get('/api/UsersOperations', createChart.CreateAllOperationsUsers);
+app.get('/api/UsersComissionsChart', createChart.CreateUsersComissionsChart);
+app.get('/api/PassTimeChart', createChart.CreatePassTimeAllChart);
+app.get('/api/SupervisorTable', createChart.CreateSupervisorTable);
+app.get('/api/CityUsersChart', createChart.CreateCityUsersChart);
+app.get('/api/AllTable', createChart.CreateAllTable);
 
 // - Recebe os dados do cliente, usuário e comissão, valida se já não existe e, se não existir, insere no banco
 app.post('/api/InsereAfterValidation', insertAfterValidation.insertDB);

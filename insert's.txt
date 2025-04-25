@@ -282,3 +282,14 @@ REFERENCES comissoes_comercial.public.users (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
+
+
+CREATE SEQUENCE public.comissions_accepted_id_comissions_accepted_seq;
+
+CREATE TABLE public.comissions_accepted (
+                id INTEGER NOT NULL DEFAULT nextval('public.comissions_accepted_id_comissions_accepted_seq'),
+                id_user_client_comission INTEGER NOT NULL,
+                accepted CHAR(3) NOT NULL,
+                CONSTRAINT comissions_accepted_pk PRIMARY KEY (id),
+                CONSTRAINT comissions_accepted_fk FOREIGN KEY (id_user_client_comission) REFERENCES comissoes_comercial.public.users_clients_comissions (id)
+);

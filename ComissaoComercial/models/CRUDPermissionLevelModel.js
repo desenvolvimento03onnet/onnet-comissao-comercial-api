@@ -4,11 +4,11 @@ const CrudPermissionLevel = {
   insertNewPermissionLevel: async (level, description, active) => {
     try {
       const query = 
-      "insert into\n"+
-      "permission_level\n"+
-      "(level, description, \"active\")\n"+
-      "VALUES\n"+
-      "($1, $2, $3)";
+      `insert into
+      permission_level
+      (level, description, "active")
+      VALUES
+      ($1, $2, $3)`;
       const values = [level, description, active];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -19,12 +19,12 @@ const CrudPermissionLevel = {
   selectPermissionLevel: async (level, description) => {
     try {
       const query = 
-      "select distinct\n"+
-      "*\n"+
-      "from permission_level p\n"+
-      "where\n"+
-      "p.\"level\" in ($1) or\n"+
-      "p.description ilike '%$2%'";
+      `select distinct
+      *
+      from permission_level p
+      where
+      p."level" in ($1) or
+      p.description ilike %$2%`;
       const values = [level, description];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -35,9 +35,9 @@ const CrudPermissionLevel = {
   selectAllPermissionLevel: async () => {
     try {
       const query = 
-      "select\n"+
-      "*\n"+
-      "from permission_level p";
+      `select
+      *
+      from permission_level p`;
       const result = await dbComissao.query(query);
       return result.rows;
     } catch (error) {
@@ -48,12 +48,12 @@ const CrudPermissionLevel = {
     let valorV = valor+",";
     try {
       const query = 
-      "update permission_level\n"+
-      "set\n"+
-      "$1 = $2\n"+
-      "where\n"+
-      "\"level\" in ($3) or\n"+
-      "description ilike '%$4%'";
+      `update permission_level
+      set
+      $1 = $2
+      where
+      "level" in ($3) or
+      description ilike %$4%`;
       const values = [campo, valorV, level, description];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -65,10 +65,10 @@ const CrudPermissionLevel = {
     let valorV = valor+" and";
     try {
       const query = 
-      "delete from\n"+
-      "permission_level\n"+
-      "where\n"+
-      "$1 = $2";
+      `delete from
+      permission_level
+      where
+      $1 = $2`;
       const values = [campo, valorV];
       const result = await dbComissao.query(query, values);
       return result.rows;

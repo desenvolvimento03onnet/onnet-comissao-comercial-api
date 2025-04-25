@@ -8,15 +8,15 @@ const Insert = {
     let valores = [];
     try {
       const query1 =
-      "select\n"+
-        "codclient,\n"+
-        "city,\n"+
-        "contract,\n"+
-        "\"date\",\n"+
-        "operation,\n"+
-        "codplan,\n"+
-        "operator\n"+
-      "from clients";
+      `select
+        codclient,
+        city,
+        contract,
+        "date",
+        operation,
+        codplan,
+        operator
+      from clients`;
       const result1 = await dbComissao.query(query1);
       valores = [result1.rows];
       var recebe = [await modelOperation.getAllOperations()];
@@ -50,11 +50,11 @@ const Insert = {
       resultados[0].map(async (origem) => {
         try {
           const query = 
-          "insert into\n"+
-          "clients\n"+
-          "(codclient, \"name\", city, contract, \"date\", operation, codplan, plan, plan_value, cod_old_plan, old_plan, old_plan_value, cod_new_plan, new_plan, new_plan_value, \"operator\", city_operator, recurring_payment, tv, telephony, invoice, paid, due_date)\n"+
-          "VALUES\n"+
-          "($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)";
+          `insert into
+          clients
+          (codclient, \"name\", city, contract, \"date\", operation, codplan, plan, plan_value, cod_old_plan, old_plan, old_plan_value, cod_new_plan, new_plan, new_plan_value, \"operator\", city_operator, recurring_payment, tv, telephony, invoice, paid, due_date)
+          VALUES
+          ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)`;
           const values = [origem.codigo, origem.cliente, origem.cidade, origem.contrato, origem.data, origem.operacao, origem.codplano, origem.plano, origem.valor_plano, origem.cod_velho_plano, origem.velho_plano, origem.velho_plano_valor, origem.cod_novo_plano, origem.novo_plano, origem.novo_plano_valor, origem.operador, origem.cidadeope, origem.recorrente, origem.tv, origem.telefonia, origem.fatura, origem.pago, origem.vencimento];
           const result = await dbComissao.query(query, values);
           return result.rows;

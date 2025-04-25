@@ -4,11 +4,11 @@ const CrudComissionLogs = {
   insertNewComissionLogs: async (date, id_comission, id_user, description) => {
     try {
       const query = 
-      "insert into\n"+
-      "comissions_logs\n"+
-      "(\"date\", id_comission, id_user, description)\n"+
-      "VALUES\n"+
-      "($1, $2, $3, $4)";
+      `insert into
+      comissions_logs
+      ("date", id_comission, id_user, description)
+      VALUES
+      ($1, $2, $3, $4)`;
       const values = [date, id_comission, id_user, description];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -19,12 +19,12 @@ const CrudComissionLogs = {
   selectComissionLogs: async (id_comission, id_user) => {
     try {
       const query = 
-      "select distinct\n"+
-      "*\n"+
-      "from comissions_logs colo\n"+
-      "where\n"+
-      "colo.\"id_comission\" = $1 or\n"+
-      "colo.\"id_user\" = $2";
+      `select distinct
+      *
+      from comissions_logs colo
+      where
+      colo."id_comission" = $1 or
+      colo."id_user" = $2`;
       const values = [id_comission, id_user];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -35,9 +35,9 @@ const CrudComissionLogs = {
   selectAllComissionLogs: async () => {
     try {
       const query = 
-      "select\n"+
-      "*\n"+
-      "from comissions_logs colo";
+      `select
+      *
+      from comissions_logs colo`;
       const result = await dbComissao.query(query);
       return result.rows;
     } catch (error) {
@@ -48,11 +48,11 @@ const CrudComissionLogs = {
     let valorV = valor+",";
     try {
       const query = 
-      "update comissions_logs\n"+
-      "set\n"+
-      "$1 = $2\n"+
-      "where\n"+
-      "\"id_comission\" ilike '%$3%'";
+      `update comissions_logs
+      set
+      $1 = $2
+      where
+      "id_comission" ilike %$3%`;
       const values = [campo, valorV, id_comission, id_user];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -64,10 +64,10 @@ const CrudComissionLogs = {
     let valorV = valor+" and";
     try {
       const query = 
-      "delete from\n"+
-      "comissions_logs\n"+
-      "where\n"+
-      "$1 = $2";
+      `delete from
+      comissions_logs
+      where
+      $1 = $2`;
       const values = [campo, valorV];
       const result = await dbComissao.query(query, values);
       return result.rows;

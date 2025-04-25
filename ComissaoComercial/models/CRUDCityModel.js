@@ -4,11 +4,11 @@ const CrudCity = {
   insertNewCity: async (name, uf) => {
     try {
       const query = 
-      "insert into\n"+
-      "cities\n"+
-      "(\"name\", uf)\n"+
-      "VALUES\n"+
-      "($1, $2)";
+      `insert into
+      cities
+      ("name", uf)
+      VALUES
+      ($1, $2)`;
       const values = [name, uf];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -19,11 +19,11 @@ const CrudCity = {
   selectCity: async (name) => {
     try {
       const query = 
-      "select distinct\n"+
-      "*\n"+
-      "from cities c\n"+
-      "where\n"+
-      "c.name ilike '%$1%'";
+      `select distinct
+      *
+      from cities c
+      where
+      c.name ilike %$1%`;
       const values = [name];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -34,9 +34,9 @@ const CrudCity = {
   selectAllCity: async () => {
     try {
       const query = 
-      "select\n"+
-      "*\n"+
-      "from cities c";
+      `select
+      *
+      from cities c`;
       const result = await dbComissao.query(query);
       return result.rows;
     } catch (error) {
@@ -47,11 +47,11 @@ const CrudCity = {
     let valorV = valor+",";
     try {
       const query = 
-      "update cities\n"+
-      "set\n"+
-      "$1 = $2\n"+
-      "where\n"+
-      "\"name\" = $3";
+      `update cities
+      set
+      $1 = $2
+      where
+      "name" = $3`;
       const values = [campo, valorV, name];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -63,10 +63,10 @@ const CrudCity = {
     let valorV = valor+" and";
     try {
       const query = 
-      "delete from\n"+
-      "cities\n"+
-      "where\n"+
-      "$1 = $2";
+      `delete from
+      cities
+      where
+      $1 = $2`;
       const values = [campo, valorV];
       const result = await dbComissao.query(query, values);
       return result.rows;

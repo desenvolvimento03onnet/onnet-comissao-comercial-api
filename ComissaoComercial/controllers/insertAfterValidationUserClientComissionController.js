@@ -22,7 +22,7 @@ const insertAfterValidationUserClientComissionController = {
 
       const valida = await UserClientComissionModel.selectAllUserClientComission();
 
-      const resultado = insere.filter(inserir => !valida.some(cadastrados => inserir.id_client == cadastrados.id_client) || valida.some(cadastrados => inserir.id_client == cadastrados.id_client && !usuario.some(users => users.id == cadastrados.id_user)) || valida.some(cadastrados => inserir.id_client == cadastrados.id_client && usuario.some(users => users.id == cadastrados.id_user) && inserir.value != cadastrados.comission_value));
+      const resultado = insere.filter(inserir => !valida.some(cadastrados => inserir.id_client == cadastrados.id_client) || !valida.some(cadastrados => inserir.id_client == cadastrados.id_client && usuario.some(users => users.id == cadastrados.id_user)) || !valida.some(cadastrados => inserir.id_client == cadastrados.id_client && usuario.some(users => users.id == cadastrados.id_user) && inserir.value == cadastrados.comission_value));
 
       resultado.map(async(item) => {
         await UserClientComissionModel.insertNewUserClientComission(item.id_user, item.id_client, item.value, dataAtual);

@@ -4,11 +4,11 @@ const CrudUserClientComission = {
   insertNewUserClientComission: async (id_user, id_client, comission_value, created_at) => {
     try {
       const query = 
-      "insert into\n"+
-      "users_clients_comissions\n"+
-      "(id_user, id_client, comission_value, created_at)\n"+
-      "VALUES\n"+
-      "($1, $2, $3, $4)";
+      `insert into
+      users_clients_comissions
+      (id_user, id_client, comission_value, created_at)
+      VALUES
+      ($1, $2, $3, $4)`;
       const values = [id_user, id_client, comission_value, created_at];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -19,13 +19,13 @@ const CrudUserClientComission = {
   selectUserClientComission: async (campo) => {
     try {
       const query = 
-      "select distinct\n"+
-      "*\n"+
-      "from users_clients_comissions ucc\n"+
-      "where\n"+
-      "ucc.id_user = $1 or\n"+
-      "ucc.id_client = $1 or\n"+
-      "ucc.id_comission = $1";
+      `select distinct
+      *
+      from users_clients_comissions ucc
+      where
+      ucc.id_user = $1 or
+      ucc.id_client = $1 or
+      ucc.id_comission = $1`;
       const values = [campo];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -36,9 +36,9 @@ const CrudUserClientComission = {
   selectAllUserClientComission: async () => {
     try {
       const query = 
-      "select\n"+
-      "*\n"+
-      "from users_clients_comissions ucc";
+      `select
+      *
+      from users_clients_comissions ucc`;
       const result = await dbComissao.query(query);
       return result.rows;
     } catch (error) {
@@ -49,13 +49,13 @@ const CrudUserClientComission = {
     let valorV = valor+",";
     try {
       const query = 
-      "update users_clients_comissions\n"+
-      "set\n"+
-      "$1 = $2\n"+
-      "where\n"+
-      "id_user = $3 or\n"+
-      "id_client = $4 or\n"+
-      "id_comission = $5";
+      `update users_clients_comissions
+      set
+      $1 = $2
+      where
+      id_user = $3 or
+      id_client = $4 or
+      id_comission = $5`;
       const values = [campo, valorV, id_user, id_client, id_comission];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -67,10 +67,10 @@ const CrudUserClientComission = {
     let valorV = valor+" and";
     try {
       const query = 
-      "delete from\n"+
-      "users_clients_comissions\n"+
-      "where\n"+
-      "$1 = $2";
+      `delete from
+      users_clients_comissions
+      where
+      $1 = $2`;
       const values = [campo, valorV];
       const result = await dbComissao.query(query, values);
       return result.rows;

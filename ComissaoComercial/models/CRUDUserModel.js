@@ -5,11 +5,11 @@ const CrudUser = {
   insertNewUser: async (user, name, password, created_at, id_city, id_sector, active) => {
     try {
       const query = 
-      "insert into\n"+
-      "users\n"+
-      "(\"user\", name, password, \"created_at\", id_city, id_sector, active)\n"+
-      "VALUES\n"+
-      "($1, $2, $3, $4, $5, $6, $7)";
+      `insert into
+      users
+      ("user", name, password, "created_at", id_city, id_sector, active)
+      VALUES
+      ($1, $2, $3, $4, $5, $6, $7)`;
       const values = [user, name, password, created_at, id_city, id_sector, active];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -20,17 +20,23 @@ const CrudUser = {
   selectUser: async (user, senha) => {
     try {
       const query = 
-      "select distinct\n"+
-      "u.\"id\",\n"+
-      "u.\"name\",\n"+
-      "u.\"password\",\n"+
-      "u.created_at,\n"+
-      "u.id_city,\n"+
-      "u.active\n"+
-      "from users u\n"+
-      "where\n"+
-      "u.\"user\" = $1 and\n"+
-      "u.\"password\" = $2";
+      `select distinct
+        u.id,
+        u.name,
+        u.password,
+        u.created_at,
+        cidade.name city,
+        u.active,
+        STRING_AGG(cast(permissao.level AS VARCHAR(500)), ' ' ORDER BY permissao.level) permission_level,
+        STRING_AGG(cast(permissao.description AS VARCHAR(500)), ' ' ORDER BY permissao.description) permission
+        from users u
+        INNER JOIN cities cidade ON (cidade.id = u.id_city)
+        INNER JOIN users_permissions usuP ON (usuP.id_user = u.id)
+        INNER JOIN permission_level permissao ON (permissao.id = usuP.id_permission_level)
+        where
+        u.user = $1 and
+        u.password = $2
+        GROUP BY 1,2,3,4,5,6`;
       const values = [user, senha];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -41,9 +47,9 @@ const CrudUser = {
   selectAllUser: async () => {
     try {
       const query = 
-      "select\n"+
-      "*\n"+
-      "from users u";
+      `select
+      *
+      from users u`;
       const result = await dbComissao.query(query);
       return result.rows;
     } catch (error) {
@@ -54,11 +60,11 @@ const CrudUser = {
     let valorV = valor+",";
     try {
       const query = 
-      "update users\n"+
-      "set\n"+
-      "$1 = $2\n"+
-      "where\n"+
-      "\"user\" ilike '%$3%'";
+      `update users
+      set
+      $1 = $2
+      where
+      "user" ilike %$3%`;
       const values = [campo, valorV, user];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -70,10 +76,10 @@ const CrudUser = {
     let valorV = valor+" and";
     try {
       const query = 
-      "delete from\n"+
-      "users\n"+
-      "where\n"+
-      "$1 = $2";
+      `delete from
+      users
+      where
+      $1 = $2`;
       const values = [campo, valorV];
       const result = await dbComissao.query(query, values);
       return result.rows;

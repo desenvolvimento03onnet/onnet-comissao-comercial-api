@@ -96,11 +96,80 @@ const createChartController = {
     try {
       const userComissionChart = await createChart.CreateUserComissionChart(user);
 
-      const resultado = userComissionChart.map(item => ({
-          ...item,
-          value: parseFloat(eval(item.value).toFixed(2))
-      }));
-      res.status(200).json(resultado);
+      // const resultado = userComissionChart.map(item => ({
+      //     ...item,
+      //     value: parseFloat(eval(item.value).toFixed(2))
+      // }));
+      res.status(200).json(userComissionChart);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar valores do Gráfico. '+error });
+    }
+  },
+  CreateAllOperationsUsers: async (req, res) => {
+    const { user } = req.query;
+    try {
+      const allOperationsUsers = await createChart.CreateAllOperationsUsers(user);
+
+      // const resultado = userComissionChart.map(item => ({
+      //     ...item,
+      //     value: parseFloat(eval(item.value).toFixed(2))
+      // }));
+      res.status(200).json(allOperationsUsers);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar valores do Gráfico. '+error });
+    }
+  },
+  CreateUsersComissionsChart: async (req, res) => {
+    const { user } = req.query;
+    try {
+      const allUsersComissions = await createChart.CreateUsersComissionsChart(user);
+
+      // const resultado = userComissionChart.map(item => ({
+      //     ...item,
+      //     value: parseFloat(eval(item.value).toFixed(2))
+      // }));
+      res.status(200).json(allUsersComissions);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar valores do Gráfico. '+error });
+    }
+  },
+  CreatePassTimeAllChart: async (req, res) => {
+    const { user } = req.query;
+    try {
+      const passTimeAll = await createChart.CreatePassTimeAllChart(user);
+
+      // const resultado = userComissionChart.map(item => ({
+      //     ...item,
+      //     value: parseFloat(eval(item.value).toFixed(2))
+      // }));
+      res.status(200).json(passTimeAll);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar valores do Gráfico. '+error });
+    }
+  },
+  CreateSupervisorTable: async (req, res) => {
+    const { user } = req.query;
+    try {
+      const supervisorTable = await createChart.CreateSupervisorTable(user);
+      res.status(200).json(supervisorTable);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar valores do Gráfico. '+error });
+    }
+  },
+  CreateCityUsersChart: async (req, res) => {
+    const { user } = req.query;
+    try {
+      const cityUsersChart = await createChart.CreateCityUsersChart(user);
+      res.status(200).json(cityUsersChart);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar valores do Gráfico. '+error });
+    }
+  },
+  CreateAllTable: async (req, res) => {
+    const { } = req.query;
+    try {
+      const allTable = await createChart.CreateAllTable();
+      res.status(200).json(allTable);
     } catch (error) {
       res.status(500).json({ error: 'Erro ao buscar valores do Gráfico. '+error });
     }

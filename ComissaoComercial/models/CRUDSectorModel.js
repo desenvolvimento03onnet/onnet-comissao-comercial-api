@@ -4,11 +4,11 @@ const CrudSector = {
   insertNewSector: async (active, name) => {
     try {
       const query = 
-      "insert into\n"+
-      "sectors\n"+
-      "(\"active\", \"name\")\n"+
-      "VALUES\n"+
-      "($1, $2)";
+      `insert into
+      sectors
+      ("active", "name")
+      VALUES
+      ($1, $2)`;
       const values = [active, name];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -19,11 +19,11 @@ const CrudSector = {
   selectSector: async (name) => {
     try {
       const query = 
-      "select distinct\n"+
-      "*\n"+
-      "from sectors se\n"+
-      "where\n"+
-      "se.\"name\" ilike '%$1%'";
+      `select distinct
+      *
+      from sectors se
+      where
+      se."name" ilike %$1%`;
       const values = [name];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -34,9 +34,11 @@ const CrudSector = {
   selectAllSector: async () => {
     try {
       const query = 
-      "select\n"+
-      "*\n"+
-      "from sectors se";
+      `select
+      *
+      from sectors se
+      where
+      se.id != 1`;
       const result = await dbComissao.query(query);
       return result.rows;
     } catch (error) {
@@ -47,11 +49,11 @@ const CrudSector = {
     let valorV = valor+",";
     try {
       const query = 
-      "update sectors\n"+
-      "set\n"+
-      "$1 = $2\n"+
-      "where\n"+
-      "\"comission\" ilike '%$3%'";
+      `update sectors
+      set
+      $1 = $2
+      where
+      "comission" ilike %$3%`;
       const values = [campo, valorV, name];
       const result = await dbComissao.query(query, values);
       return result.rows;
@@ -63,10 +65,10 @@ const CrudSector = {
     let valorV = valor+" and";
     try {
       const query = 
-      "delete from\n"+
-      "sectors\n"+
-      "where\n"+
-      "$1 = $2";
+      `delete from
+      sectors
+      where
+      $1 = $2`;
       const values = [campo, valorV];
       const result = await dbComissao.query(query, values);
       return result.rows;

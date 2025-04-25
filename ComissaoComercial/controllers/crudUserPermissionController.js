@@ -11,9 +11,9 @@ const crudUserPermissionController = {
     }
   },
   selectUserPermission: async (req, res) => {
-    const { campo } = req.body;
+    const { user, password } = req.query;
     try {
-      const selectUserPermission = await crudUserPermission.selectUserPermission(campo);
+      const selectUserPermission = await crudUserPermission.selectUserPermission(user, password);
       res.status(200).json(selectUserPermission);
     } catch (error) {
       res.status(500).json({ error: 'Erro ao buscar Usuário. '+error });
