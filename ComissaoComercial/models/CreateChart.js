@@ -111,24 +111,25 @@ const CreateSellChart = {
     try {
       const query = 
       `WITH cliente AS (
-          select
-            *
-          from
-            clients cli
+        select
+          *
+        from
+          clients cli
         ),comissao AS (
-          select
-            comi.comission,
-            comi.value,
-            comi.id_sector,
-            comi.created_at
-          from
-            comissions comi
+        select
+          comi.comission,
+          comi.value,
+          comi.id_sector,
+          comi.created_at
+        from
+          comissions comi
         )
         SELECT DISTINCT
-          *
+        *
         FROM
         (
         select distinct
+        cli.id,
         cli.codclient,
         cli."name",
         cli.city,
@@ -153,54 +154,62 @@ const CreateSellChart = {
         cli.paid,
         cli.due_date,
         CASE
-          WHEN cli.date >= date(comi.created_at)
-              AND cli.date < COALESCE(
-                      (
-                    SELECT
-                    min(date(created_at))
-                  FROM
-                    comissions
-                  WHERE
-                    date(created_at) > date(comi.created_at) and
+        WHEN cli.date >= date(comi.created_at)
+            AND cli.date < COALESCE(
                     (
-                      comission = comi.comission
-                      OR
-                      (
-                        comission = comi.comission and
-                        comi.comission ILIKE ANY(ARRAY['Dia 1', 'Dia 2'])
-                      )
-                    )and
-                    id_sector = se.id
-                  ORDER BY 1), 
-                      '9999-12-31'::date
-                  )
-              THEN
-                CASE
-                  when position('valor_plano' in comi.value) != 0 THEN REPLACE(comi.value, 'valor_plano', cli.plan_value||'')
-                  when position('novo_plano_valor' in comi.value) != 0 THEN
-                    case
-                      WHEN position('velho_plano_valor' in comi.value) != 0 THEN REPLACE(REPLACE(comi.value, 'novo_plano_valor', cli.new_plan_value||''), 'velho_plano_valor', cli.old_plan_value||'')
-                      ELSE REPLACE(comi.value, 'novo_plano_valor', cli.new_plan_value||'')
-                    end
-                  when position('velho_plano_valor' in comi.value) != 0 THEN 
-                    case
-                      WHEN position('novo_plano_valor' in comi.value) != 0 THEN REPLACE(REPLACE(comi.value, 'velho_plano_valor', cli.old_plan_value||''), 'novo_plano_valor', cli.new_plan_value||'')
-                      ELSE REPLACE(comi.value, 'velho_plano_valor', cli.old_plan_value||'')
-                    end
-                  WHEN comi.comission ILIKE ANY(ARRAY['Dia 1', 'Dia 2']) then
-                    case
-                      WHEN SPLIT_PART(comi.value, ' ', 1) = cli.due_date THEN SPLIT_PART(comi.value, ' ', 3)
-                      ELSE NULL
-                    end
-                  ELSE comi.value
-                END
-        END comission
+                  SELECT
+                  min(date(created_at))
+                FROM
+                  comissions
+                WHERE
+                  date(created_at) > date(comi.created_at) and
+                  (
+                    comission = comi.comission
+                    OR
+                    (
+                      comission = comi.comission and
+                      comi.comission ILIKE ANY(ARRAY['Dia 1', 'Dia 2'])
+                    )
+                  )and
+                  id_sector = se.id
+                ORDER BY 1), 
+                    '9999-12-31'::date
+                )
+            THEN
+              CASE
+                when position('valor_plano' in comi.value) != 0 THEN REPLACE(comi.value, 'valor_plano', cli.plan_value||'')
+                when position('novo_plano_valor' in comi.value) != 0 THEN
+                  case
+                    WHEN position('velho_plano_valor' in comi.value) != 0 THEN REPLACE(REPLACE(comi.value, 'novo_plano_valor', cli.new_plan_value||''), 'velho_plano_valor', cli.old_plan_value||'')
+                    ELSE REPLACE(comi.value, 'novo_plano_valor', cli.new_plan_value||'')
+                  end
+                when position('velho_plano_valor' in comi.value) != 0 THEN 
+                  case
+                    WHEN position('novo_plano_valor' in comi.value) != 0 THEN REPLACE(REPLACE(comi.value, 'velho_plano_valor', cli.old_plan_value||''), 'novo_plano_valor', cli.new_plan_value||'')
+                    ELSE REPLACE(comi.value, 'velho_plano_valor', cli.old_plan_value||'')
+                  end
+                WHEN comi.comission ILIKE ANY(ARRAY['Dia 1', 'Dia 2']) then
+                  case
+                    WHEN SPLIT_PART(comi.value, ' ', 1) = cli.due_date THEN SPLIT_PART(comi.value, ' ', 3)
+                    ELSE NULL
+                  end
+                ELSE comi.value
+              END
+        END comission,
+        comi.value formula,
+        aceito.accepted
         from
         users usu
         INNER JOIN cliente cli ON (cli.operator = usu.user)
-        INNER JOIN comissao comi ON (comi.comission = cli.operation OR comi.comission ILIKE ANY(ARRAY['Dia 1', 'Dia 2']))
+        INNER JOIN comissao comi ON (comi.comission = cli.operation OR (
+        comi.comission ILIKE ANY(ARRAY['Dia 1', 'Dia 2']) and
+        cli.operation = 'Venda'
+        )
+        )
         INNER JOIN users_sectors ususe ON (ususe.id_user = usu.id)
         INNER JOIN sectors se ON (se.id = comi.id_sector AND se.id = ususe.id_sector)
+        LEFT JOIN users_clients_comissions userCC ON (userCC.id_client = cli.id AND userCC.id_user = usu.id)
+        LEFT JOIN comissions_accepted aceito ON (aceito.id_user_client_comission = userCC.id)
         where
         usu.user = $1
         ) tabela
@@ -728,7 +737,8 @@ const CreateSellChart = {
                   end
                 ELSE comi.value
               END
-        END comission
+        END comission,
+        aceito.accepted
         from
         users usu
         INNER JOIN cliente cli ON (cli.operator = usu.user)
@@ -743,6 +753,8 @@ const CreateSellChart = {
         INNER JOIN users usuSU ON (usuSU.id = ususeSU.id_user)
         INNER JOIN users_permissions permissionSU ON (permissionSU.id_user = usuSU.id)
         INNER JOIN permission_level permission ON (permission.id = permissionSU.id_permission_level)
+        LEFT JOIN users_clients_comissions userCC ON (userCC.id_client = cli.id AND userCC.id_user = usu.id)
+        LEFT JOIN comissions_accepted aceito ON (aceito.id_user_client_comission = userCC.id)
         where
         usuSU.user = $1 and
         permission."level" = 2
