@@ -166,7 +166,7 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
     </td>
     <td align="center">
       <a href="https://github.com/desenvolvimento02onnet" title="Lucas Moreira da Silva">
-        <img src="img/lucas.jpg" width="100px;" alt="Foto do Lucas Moreira"/><br>
+        <img src="img/lucas.jpg" width="100px;" alt="Foto do Lucas Moreira no GitHub"/><br>
         <sub>
           <b>Lucas Moreira</b>
         </sub>
@@ -174,7 +174,7 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
     </td>
     <td align="center">
       <a href="https://github.com/desenvolvimento08onnet" title="Vitória Stéfane de Souza">
-        <img src="img/vitoria.jpg" width="100px;" alt="Foto do Vitória Stéfane"/><br>
+        <img src="img/vitoria.jpg" width="100px;" alt="Foto do Vitória Stéfane no GitHub"/><br>
         <sub>
           <b>Vitória Stéfane</b>
         </sub>
@@ -182,7 +182,7 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
     </td>
     <td align="center">
       <a href="https://github.com/desenvolvimentoonnet" title="Welington Luiz Borges">
-        <img src="img/pepsi.jpg" width="100px;" alt="Foto do Welington Luiz"/><br>
+        <img src="img/pepsi.jpg" width="100px;" alt="Foto do Welington Luiz no GitHub"/><br>
         <sub>
           <b>Welington Luiz<img src="img/pepsi_can.png" width="30px;" alt="Lata de Pepsi"/></b>
         </sub>
