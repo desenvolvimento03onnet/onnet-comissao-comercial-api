@@ -194,3 +194,7 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
 ## 📝 Template
 
 Esse template que eu utilizei, foi encontrato no seguinte site: [TEMPLATE](https://github.com/iuricode/readme-template/blob/main/repositorio/exemplo-01.md).
+
+## 🏷️ Badges
+
+As badges, eu consegui criar no site: [BADGES](https://shields.io/badges/git-hub-repo-size).
