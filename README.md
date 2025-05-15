@@ -198,3 +198,15 @@ Esse template que eu utilizei, foi encontrato no seguinte site: [TEMPLATE](https
 ## 🏷️ Badges
 
 As badges, eu consegui criar no site: [BADGES](https://shields.io/badges/git-hub-repo-size).
+
+## 🛢 Banco de Dados (Exemplo)
+
+Eu criei um arquivo exemplo em formato .sql para que você consiga, realizar um dump em um BD já criado e testar a aplicação: [dump](banco.sql).
+
+Como o arquivo, está em formato .sql, vc vai precisar fazer um restore diretamente no psql, da seguinte forma:
+```
+psql -U [Seu_usuario] -h [IP onde está o banco] -p [Porta] -d [Nome do Novo Banco] -f [Local onde o .sql foi salvo]
+```
+
+> [!IMPORTANT]
+> Se você colocar um nome diferente no banco de dados, certifique-se de mudar na conf/db.js também, senão o projeto não irá funcionar.
