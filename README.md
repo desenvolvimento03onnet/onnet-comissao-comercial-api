@@ -205,7 +205,7 @@ Eu criei um arquivo exemplo em formato .sql para que você consiga, realizar um 
 
 Como o arquivo, está em formato .sql, vc vai precisar fazer um restore diretamente no psql, da seguinte forma:
 ```
-psql -U [Seu_usuario] -h [IP onde está o banco] -p [Porta] -d [Nome do Novo Banco] -f [Local onde o .sql foi salvo]
+psql -U [Seu_usuario] -h [IP onde está o banco] -p [Porta] -d [Nome do Novo Banco] -f [Local onde o .sql foi salvo. Ex: local/dump.sql]
 ```
 
 > [!IMPORTANT]
